@@ -7,7 +7,8 @@ import (
 
 func main() {
 	arr := []int{3, 1, 5, 2, 6, 9, 2, 5}
-	fmt.Printf("dddddddd=%v\n", BubbleSort(arr))
+	QuickSort(&arr, 0, 7)
+	fmt.Printf("dddddddd=%v\n", arr)
 }
 
 // 选择排序
@@ -61,4 +62,30 @@ func BubbleSort(arr []int) []int {
 		}
 	}
 	return arr
+}
+
+// 快速排序 用到了分治和递归
+func QuickSort(arr *[]int, start, end int) {
+	if end <= start {
+		return
+	}
+	cur := partition(arr, start, end)
+	QuickSort(arr, start, cur-1)
+	QuickSort(arr, cur+1, end)
+
+}
+func partition(arr *[]int, start, end int) int {
+	cur := start
+	for i := start; i <= end; i++ {
+		if (*arr)[i] < (*arr)[end] {
+			temp := (*arr)[cur]
+			(*arr)[cur] = (*arr)[i]
+			(*arr)[i] = temp
+			cur++
+		}
+	}
+	temp := (*arr)[cur]
+	(*arr)[cur] = (*arr)[end]
+	(*arr)[end] = temp
+	return cur
 }
