@@ -7,8 +7,8 @@ import (
 
 func main() {
 	arr := []int{3, 1, 5, 2, 6, 9, 2, 5}
-	QuickSort(&arr, 0, 7)
-	fmt.Printf("dddddddd=%v\n", arr)
+	// QuickSort(&arr, 0, 7)
+	fmt.Printf("dddddddd=%v\n", MergeSort(arr, 0, 7))
 }
 
 // 选择排序
@@ -88,4 +88,64 @@ func partition(arr *[]int, start, end int) int {
 	(*arr)[cur] = (*arr)[end]
 	(*arr)[end] = temp
 	return cur
+}
+
+// 归并排序
+func MergeSort(arr []int, left, right int) []int {
+
+	if right <= left {
+		return arr
+	}
+	fmt.Printf("arr==%v\n", arr)
+	mid := (left + right) / 2
+	leftArr := MergeSort(arr, left, mid)
+	fmt.Printf("leftArr==%v\n", leftArr)
+	fmt.Printf("mid==%v\n", mid)
+	fmt.Printf("right==%v\n", right)
+	rightArr := MergeSort(arr, mid+1, right)
+	fmt.Printf("rightArr==%v\n", rightArr)
+
+	return merge(leftArr, rightArr, left, mid, right)
+
+}
+func merge(arrLeft, arrRight []int, left, mid, right int) []int {
+	fmt.Printf("merge=left==%v\n", left)
+	fmt.Printf("merge=mid==%v\n", mid)
+	fmt.Printf("merge=right==%v\n", right)
+	fmt.Printf("arrLeft==%v\n", arrLeft)
+	fmt.Printf("arrRight==%v\n", arrRight)
+	start := left
+	midStart := mid + 1
+	l := right - left + 1
+	temp := []int{}
+	for i := 0; i < l; i++ {
+		temp = append(temp, 0)
+	}
+	k := 0
+	fmt.Printf("111=%v\n", 1)
+	if start <= mid && midStart <= right {
+		if arrLeft[start] < arrRight[right-midStart] {
+			temp[k] = arrLeft[start]
+			start++
+		} else {
+			temp[k] = arrRight[right-midStart]
+			midStart++
+		}
+		k++
+	}
+	fmt.Printf("111=%v\n", 2)
+	for start <= mid {
+		temp[k] = arrLeft[left]
+		start++
+		k++
+	}
+	fmt.Printf("111=%v\n", 3)
+	for midStart <= right {
+		temp[k] = arrRight[midStart]
+		midStart++
+		k++
+	}
+
+	return temp
+
 }
