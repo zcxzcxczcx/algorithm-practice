@@ -7,7 +7,6 @@ import (
 
 func main() {
 	arr := []int{3, 1, 5, 2, 6, 9, 2, 5}
-	// QuickSort(&arr, 0, 7)
 	fmt.Printf("dddddddd=%v\n", MergeSort(arr, 0, 7))
 }
 
@@ -92,28 +91,18 @@ func partition(arr *[]int, start, end int) int {
 
 // 归并排序
 func MergeSort(arr []int, left, right int) []int {
-
-	if right <= left {
+	if left >= right {
 		return arr
 	}
-	fmt.Printf("arr==%v\n", arr)
 	mid := (left + right) / 2
-	leftArr := MergeSort(arr, left, mid)
-	fmt.Printf("leftArr==%v\n", leftArr)
-	fmt.Printf("mid==%v\n", mid)
-	fmt.Printf("right==%v\n", right)
-	rightArr := MergeSort(arr, mid+1, right)
-	fmt.Printf("rightArr==%v\n", rightArr)
-
-	return merge(leftArr, rightArr, left, mid, right)
-
+	arr = MergeSort(arr, left, mid)
+	fmt.Printf("dddddddddd111111111111=%v\n", arr)
+	arr = MergeSort(arr, mid+1, right)
+	fmt.Printf("dddddddddd2222222222=%v\n", arr)
+	return merge(arr, left, mid, right)
 }
-func merge(arrLeft, arrRight []int, left, mid, right int) []int {
-	fmt.Printf("merge=left==%v\n", left)
-	fmt.Printf("merge=mid==%v\n", mid)
-	fmt.Printf("merge=right==%v\n", right)
-	fmt.Printf("arrLeft==%v\n", arrLeft)
-	fmt.Printf("arrRight==%v\n", arrRight)
+
+func merge(arr []int, left, mid, right int) []int {
 	start := left
 	midStart := mid + 1
 	l := right - left + 1
@@ -122,30 +111,30 @@ func merge(arrLeft, arrRight []int, left, mid, right int) []int {
 		temp = append(temp, 0)
 	}
 	k := 0
-	fmt.Printf("111=%v\n", 1)
-	if start <= mid && midStart <= right {
-		if arrLeft[start] < arrRight[right-midStart] {
-			temp[k] = arrLeft[start]
+	for start <= mid && midStart <= right {
+		if arr[start] < arr[midStart] {
+			temp[k] = arr[start]
 			start++
 		} else {
-			temp[k] = arrRight[right-midStart]
+			temp[k] = arr[midStart]
 			midStart++
 		}
 		k++
 	}
-	fmt.Printf("111=%v\n", 2)
 	for start <= mid {
-		temp[k] = arrLeft[left]
+		temp[k] = arr[start]
 		start++
 		k++
 	}
-	fmt.Printf("111=%v\n", 3)
 	for midStart <= right {
-		temp[k] = arrRight[midStart]
+		temp[k] = arr[midStart]
 		midStart++
 		k++
 	}
+	for i := 0; i < l; i++ {
+		arr[left+i] = temp[i]
+	}
 
-	return temp
+	return arr
 
 }
