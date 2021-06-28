@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	arr := []int{3, 1, 5, 2, 6, 9, 2, 5}
-	buildBinaryTree(arr)
-	fmt.Printf("dddddddd=%v\n", countSorting(arr, 9))
+	arr := []int{3, 1, 5, 2, 6, 9, 2, 8, 5}
+	// buildBinaryTree(arr)
+	fmt.Printf("dddddddd=%v\n", bucketSort(arr, 2))
 }
 
 // 选择排序
@@ -197,4 +197,38 @@ func countSorting(arr []int, maxValue int) []int {
 		}
 	}
 	return arrSortReturn
+}
+
+// 桶排序
+func bucketSort(arr []int, bucketSize int) []int {
+	if len(arr) == 0 {
+		return nil
+	}
+	min := arr[0]
+	max := arr[0]
+	for i := range arr {
+		if arr[i] < min {
+			min = arr[i]
+		}
+		if arr[i] > max {
+			max = arr[i]
+		}
+	}
+	bucketAccount := ((max - min) / bucketSize) + 1 // 桶的数量
+	bucket := [][]int{}
+	for i := 0; i < bucketAccount; i++ {
+		bucket = append(bucket, []int{})
+	}
+	for i := 0; i < len(arr); i++ {
+		bucketIdx := (arr[i] - min) / bucketSize
+		bucket[bucketIdx] = append(bucket[bucketIdx], arr[i])
+	}
+	arrSort := []int{}
+	for i := 0; i < bucketAccount; i++ {
+		ar := InsertSort(bucket[i]) // 对每个桶对元素进行排序
+		for j := 0; j < len(ar); j++ {
+			arrSort = append(arrSort, ar[j])
+		}
+	}
+	return arrSort
 }
