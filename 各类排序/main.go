@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	arr := []int{3, 1, 5, 2, 6, 9, 2, 8, 5}
-	// buildBinaryTree(arr)
-	fmt.Printf("dddddddd=%v\n", bucketSort(arr, 2))
+	arr := []int{3, 1, 5, 200000, 6, 9, 2, 3902, 5}
+	radixSort(arr, 6)
+	fmt.Printf("dddddddd=%v\n", arr)
 }
 
 // 选择排序
@@ -231,4 +231,31 @@ func bucketSort(arr []int, bucketSize int) []int {
 		}
 	}
 	return arrSort
+}
+
+//基数排序
+func radixSort(arr []int, maxDigit int) {
+	if len(arr) <= 0 {
+		return
+	}
+	mod := 10
+	dev := 1
+
+	for i := 0; i < maxDigit; i++ {
+		buket := [10][]int{}
+		for j := 0; j < len(arr); j++ {
+			buketIndex := (arr[j] % mod) / dev
+			buket[buketIndex] = append(buket[buketIndex], arr[j])
+		}
+		pos := 0
+		for j := 0; j < 10; j++ {
+			for z := 0; z < len(buket[j]); z++ {
+				arr[pos] = buket[j][z]
+				pos++
+			}
+		}
+		dev = 10 * dev
+		mod = 10 * mod
+	}
+
 }
