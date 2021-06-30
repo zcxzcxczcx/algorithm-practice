@@ -6,9 +6,14 @@ import (
 )
 
 func main() {
-	arr := []int{3, 1, 5, 200000, 6, 9, 2, 3902, 5}
-	radixSort(arr, 6)
-	fmt.Printf("dddddddd=%v\n", arr)
+	arr := []int{3, 1, 5, 34, 6, 9, 2, 60, 5}
+	// for i := 0; i < 10; i++ {
+	// 	if i >= 0 {
+	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
+	// 	}
+	// }
+	shellSort(arr)
+	fmt.Printf("iiiiiiiiiii=%v\n", arr)
 }
 
 // 选择排序
@@ -258,4 +263,24 @@ func radixSort(arr []int, maxDigit int) {
 		mod = 10 * mod
 	}
 
+}
+
+// 希尔排序
+func shellSort(arr []int) {
+	for gap := len(arr) / 2; gap > 0; gap = gap / 2 {
+		for i := gap; i < len(arr); i++ {
+			j := i
+			current := arr[i]
+			for j-gap >= 0 {
+				if current < arr[j-gap] {
+					arr[j] = arr[j-gap]
+					j = j - gap
+				} else {
+					break
+				}
+
+			}
+			arr[j] = current
+		}
+	}
 }
