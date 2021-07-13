@@ -70,7 +70,7 @@ func BubbleSort(arr []int) []int {
 }
 
 // 快速排序 用到了分治和递归
-func QuickSort(arr *[]int, start, end int) {
+func QuickSort(arr []int, start, end int) {
 	if end <= start {
 		return
 	}
@@ -79,19 +79,19 @@ func QuickSort(arr *[]int, start, end int) {
 	QuickSort(arr, cur+1, end)
 
 }
-func partition(arr *[]int, start, end int) int {
+func partition(arr []int, start, end int) int {
 	cur := start
-	for i := start; i <= end; i++ {
-		if (*arr)[i] < (*arr)[end] {
-			temp := (*arr)[cur]
-			(*arr)[cur] = (*arr)[i]
-			(*arr)[i] = temp
+	for i := start; i < end; i++ {
+		if arr[i] < arr[end] {
+			temp := arr[cur]
+			arr[cur] = arr[i]
+			arr[i] = temp
 			cur++
 		}
 	}
-	temp := (*arr)[cur]
-	(*arr)[cur] = (*arr)[end]
-	(*arr)[end] = temp
+	temp := arr[cur]
+	arr[cur] = arr[end]
+	arr[end] = temp
 	return cur
 }
 
