@@ -2,37 +2,34 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func main() {
-	arr := []int{3, 1, 5, 34, 6, 9, 2, 60, 5}
+	arr := []int{4, 0, 0, 34, 8, 9, 2, 60, 5}
 	// for i := 0; i < 10; i++ {
 	// 	if i >= 0 {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	shellSort(arr)
+	SelectSort(arr)
 	fmt.Printf("iiiiiiiiiii=%v\n", arr)
 }
 
 // 选择排序
-func SelectSort(arr []int) []int {
-	arrL := len(arr)
-	for i := 0; i < arrL; i++ {
-		min := math.MaxInt64
-		minK := i
-		for k, arrV := range arr[i:] {
-			if arrV < min {
-				min = arrV
-				minK = i + k
+func SelectSort(arr []int) {
+	for i := 0; i < len(arr); i++ {
+		minIdx := i
+		for j := i + 1; j < len(arr); j++ {
+			if arr[j] < arr[minIdx] {
+				minIdx = j
 			}
 		}
+
 		temp := arr[i]
-		arr[i] = arr[minK]
-		arr[minK] = temp
+		arr[i] = arr[minIdx]
+		arr[minIdx] = temp
+
 	}
-	return arr
 }
 
 // 插入排序
