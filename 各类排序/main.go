@@ -5,13 +5,13 @@ import (
 )
 
 func main() {
-	arr := []int{4, 0, 0, 34, 8, 9, 2, 60, 5}
+	arr := []int{0, 399, 0, 34, 4, 3, 2, 0, 1}
 	// for i := 0; i < 10; i++ {
 	// 	if i >= 0 {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	SelectSort(arr)
+	ShellSort(arr)
 	fmt.Printf("www=%v\n", arr)
 }
 
@@ -32,22 +32,22 @@ func SelectSort(arr []int) {
 	}
 }
 
-// 插入排序
+//插入排序
 func InsertSort(arr []int) []int {
-	arrLen := len(arr)
-	for i := 0; i < arrLen; i++ {
-		temp := arr[i]
-		for j := i - 1; j >= 0; j-- {
-			if temp < arr[j] {
-				arr[j+1] = arr[j]
-				arr[j] = temp
-			} else {
+	arrL := len(arr)
+	for i := 0; i < arrL; i++ {
+		idx := i
+		v := arr[idx]
+		for idx > 0 {
+			if v > arr[idx-1] {
 				break
 			}
+			arr[idx] = arr[idx-1]
+			idx--
 		}
+		arr[idx] = v
 	}
 	return arr
-
 }
 
 // 冒泡排序
@@ -263,21 +263,20 @@ func radixSort(arr []int, maxDigit int) {
 }
 
 // 希尔排序
-func shellSort(arr []int) {
-	for gap := len(arr) / 2; gap > 0; gap = gap / 2 {
-		for i := gap; i < len(arr); i++ {
-			j := i
-			current := arr[i]
-			for j-gap >= 0 {
-				if current < arr[j-gap] {
-					arr[j] = arr[j-gap]
-					j = j - gap
-				} else {
+func ShellSort(arr []int) {
+	arrL := len(arr)
+	for gap := arrL / 2; gap >= 1; gap = gap / 2 {
+		for i := gap; i < arrL; i++ {
+			v := arr[i]
+			idx := i
+			for idx-gap >= 0 {
+				if arr[idx-gap] <= v {
 					break
 				}
-
+				arr[idx] = arr[idx-gap]
+				idx = idx - gap
 			}
-			arr[j] = current
+			arr[idx] = v
 		}
 	}
 }
