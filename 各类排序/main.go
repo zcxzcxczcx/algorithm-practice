@@ -11,8 +11,8 @@ func main() {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	ShellSort(arr)
-	fmt.Printf("www=%v\n", arr)
+
+	fmt.Printf("www=%v\n", MergeSort(arr))
 }
 
 // 选择排序
@@ -66,79 +66,31 @@ func BubbleSort(arr []int) []int {
 	return arr
 }
 
-// 快速排序 用到了分治和递归
-func QuickSort(arr []int, start, end int) {
-	if end <= start {
-		return
-	}
-	cur := partition(arr, start, end)
-	QuickSort(arr, start, cur-1)
-	QuickSort(arr, cur+1, end)
+// // 快速排序 用到了分治和递归
+// func QuickSort(arr []int, start, end int) {
+// 	if end <= start {
+// 		return
+// 	}
+// 	cur := partition(arr, start, end)
+// 	QuickSort(arr, start, cur-1)
+// 	QuickSort(arr, cur+1, end)
 
-}
-func partition(arr []int, start, end int) int {
-	cur := start
-	for i := start; i < end; i++ {
-		if arr[i] < arr[end] {
-			temp := arr[cur]
-			arr[cur] = arr[i]
-			arr[i] = temp
-			cur++
-		}
-	}
-	temp := arr[cur]
-	arr[cur] = arr[end]
-	arr[end] = temp
-	return cur
-}
-
-// 归并排序
-func MergeSort(arr []int, left, right int) []int {
-	if left >= right {
-		return arr
-	}
-	mid := (left + right) / 2
-	arr = MergeSort(arr, left, mid)
-	arr = MergeSort(arr, mid+1, right)
-	return merge(arr, left, mid, right)
-}
-
-func merge(arr []int, left, mid, right int) []int {
-	start := left
-	midStart := mid + 1
-	l := right - left + 1
-	temp := []int{}
-	for i := 0; i < l; i++ {
-		temp = append(temp, 0)
-	}
-	k := 0
-	for start <= mid && midStart <= right {
-		if arr[start] < arr[midStart] {
-			temp[k] = arr[start]
-			start++
-		} else {
-			temp[k] = arr[midStart]
-			midStart++
-		}
-		k++
-	}
-	for start <= mid {
-		temp[k] = arr[start]
-		start++
-		k++
-	}
-	for midStart <= right {
-		temp[k] = arr[midStart]
-		midStart++
-		k++
-	}
-	for i := 0; i < l; i++ {
-		arr[left+i] = temp[i]
-	}
-
-	return arr
-
-}
+// }
+// func partition(arr []int, start, end int) int {
+// 	cur := start
+// 	for i := start; i < end; i++ {
+// 		if arr[i] < arr[end] {
+// 			temp := arr[cur]
+// 			arr[cur] = arr[i]
+// 			arr[i] = temp
+// 			cur++
+// 		}
+// 	}
+// 	temp := arr[cur]
+// 	arr[cur] = arr[end]
+// 	arr[end] = temp
+// 	return cur
+// }
 
 //堆排序
 // 下沉节点:删除的时候下沉
@@ -279,4 +231,70 @@ func ShellSort(arr []int) {
 			arr[idx] = v
 		}
 	}
+}
+
+// 归并排序
+func MergeSort(arr []int) []int {
+	fmt.Printf("arrarrarrarr=%v\n", arr)
+	arrL := len(arr)
+	if arrL < 2 {
+		return arr
+	}
+	mid := arrL / 2
+
+	leftArr := MergeSort(arr[:mid])
+	fmt.Printf("leftArrleftArrleftArr=%v\n", leftArr)
+	rightArr := MergeSort(arr[mid:])
+	fmt.Printf("rightArrrightArrrightArr=%v\n", rightArr)
+	return merge(leftArr, rightArr)
+}
+func merge(leftArr, rightArr []int) []int {
+	fmt.Printf("mergemergemergemergeleftArrleftArrleftArr=%v\n", leftArr)
+	fmt.Printf("mergemergemergemergerightArrrightArrrightArr=%v\n", rightArr)
+	leftL := len(leftArr)
+	rightL := len(rightArr)
+	tempArr := make([]int, 0)
+	leftLIDX := 0
+	rightIDX := 0
+	for leftLIDX < leftL && rightIDX < rightL {
+		if leftArr[leftLIDX] <= rightArr[rightIDX] {
+			tempArr = append(tempArr, leftArr[leftLIDX])
+			leftLIDX++
+		} else {
+			tempArr = append(tempArr, rightArr[rightIDX])
+			rightIDX++
+		}
+	}
+	if leftLIDX < leftL {
+		tempArr = append(tempArr, leftArr[leftLIDX:]...)
+	}
+	if rightIDX < rightL {
+		tempArr = append(tempArr, rightArr[rightIDX:]...)
+	}
+	return tempArr
+
+}
+
+// 快速排序 用到了分治和递归
+func QuickSort(arr []int, start, end int) {
+	if start >= end {
+		return
+	}
+	i := partition(arr, start, end)
+	QuickSort(arr, start, i)
+	QuickSort(arr, i+1, end)
+	return
+}
+func partition(arr []int, start, end int) int {
+	pivotValue := arr[start]
+	idx := start + 1
+	for i := idx; i <= end; i++ {
+		if arr[i] < pivotValue {
+			temp := arr[i]
+			arr[idx] = arr[i]
+			arr[i] = temp
+			idx++
+		}
+	}
+	return idx - 1
 }
