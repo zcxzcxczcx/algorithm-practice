@@ -5,13 +5,13 @@ import (
 )
 
 func main() {
-	arr := []int{7, 399, 0, 34, 4, 3, 2, 0, 1}
+	arr := []int{0, 1, 0, 7, 4, 3, 2, 34, 399, 1}
 	// for i := 0; i < 10; i++ {
 	// 	if i >= 0 {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	QuickSort(arr, 0, len(arr)-1)
+	upAdjust(arr)
 	fmt.Printf("www=%v\n", arr)
 }
 
@@ -66,6 +66,14 @@ func BubbleSort(arr []int) []int {
 	return arr
 }
 
+// 构建堆
+func buildBinaryTree(binaryTree []int) {
+	startIndex := (len(binaryTree) - 1) / 2
+	for i := startIndex; i >= 0; i-- {
+		downAdjust(binaryTree, i)
+	}
+}
+
 //堆排序
 // 下沉节点:删除的时候下沉
 func downAdjust(binaryTreeArr []int, parentIndex int) {
@@ -86,25 +94,21 @@ func downAdjust(binaryTreeArr []int, parentIndex int) {
 	binaryTreeArr[parentIndex] = temp
 }
 
-// 构建堆
-func buildBinaryTree(binaryTree []int) {
-	startIndex := (len(binaryTree) - 1) / 2
-	for i := startIndex; i >= 0; i-- {
-		downAdjust(binaryTree, i)
-	}
-}
-
 // 上浮节点,添加节点的时候上浮
-func upAdjust(binaryTreeArr []int) {
-	childIndex := len(binaryTreeArr) - 1
-	temp := binaryTreeArr[childIndex]
+func upAdjust(arr []int) {
+	arrL := len(arr)
+	childIndex := arrL - 1
+	temp := arr[childIndex]
 	parentIndex := (childIndex - 1) / 2
-	for temp < binaryTreeArr[parentIndex] {
-		binaryTreeArr[childIndex] = binaryTreeArr[parentIndex]
+	for parentIndex >= 0 {
+		if temp >= arr[parentIndex] {
+			break
+		}
+		arr[childIndex] = arr[parentIndex]
 		childIndex = parentIndex
 		parentIndex = (childIndex - 1) / 2
 	}
-	binaryTreeArr[childIndex] = temp
+	arr[childIndex] = temp
 }
 
 // 计数排序
@@ -255,7 +259,6 @@ func QuickSort(arr []int, start, end int) {
 		return
 	}
 	i := partition(arr, start, end)
-	fmt.Printf("qqqqqqqqqqqq=%v\n", i)
 	QuickSort(arr, start, i)
 	QuickSort(arr, i+1, end)
 	return
