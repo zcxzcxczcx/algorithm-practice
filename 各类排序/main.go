@@ -5,14 +5,14 @@ import (
 )
 
 func main() {
-	arr := []int{0, 399, 0, 34, 4, 3, 2, 0, 1}
+	arr := []int{7, 399, 0, 34, 4, 3, 2, 0, 1}
 	// for i := 0; i < 10; i++ {
 	// 	if i >= 0 {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-
-	fmt.Printf("www=%v\n", MergeSort(arr))
+	QuickSort(arr, 0, len(arr)-1)
+	fmt.Printf("www=%v\n", arr)
 }
 
 // 选择排序
@@ -65,32 +65,6 @@ func BubbleSort(arr []int) []int {
 	}
 	return arr
 }
-
-// // 快速排序 用到了分治和递归
-// func QuickSort(arr []int, start, end int) {
-// 	if end <= start {
-// 		return
-// 	}
-// 	cur := partition(arr, start, end)
-// 	QuickSort(arr, start, cur-1)
-// 	QuickSort(arr, cur+1, end)
-
-// }
-// func partition(arr []int, start, end int) int {
-// 	cur := start
-// 	for i := start; i < end; i++ {
-// 		if arr[i] < arr[end] {
-// 			temp := arr[cur]
-// 			arr[cur] = arr[i]
-// 			arr[i] = temp
-// 			cur++
-// 		}
-// 	}
-// 	temp := arr[cur]
-// 	arr[cur] = arr[end]
-// 	arr[end] = temp
-// 	return cur
-// }
 
 //堆排序
 // 下沉节点:删除的时候下沉
@@ -275,12 +249,13 @@ func merge(leftArr, rightArr []int) []int {
 
 }
 
-// 快速排序 用到了分治和递归
+// 快速排序1 用到了分治和递归
 func QuickSort(arr []int, start, end int) {
 	if start >= end {
 		return
 	}
 	i := partition(arr, start, end)
+	fmt.Printf("qqqqqqqqqqqq=%v\n", i)
 	QuickSort(arr, start, i)
 	QuickSort(arr, i+1, end)
 	return
@@ -290,11 +265,41 @@ func partition(arr []int, start, end int) int {
 	idx := start + 1
 	for i := idx; i <= end; i++ {
 		if arr[i] < pivotValue {
-			temp := arr[i]
-			arr[idx] = arr[i]
-			arr[i] = temp
+			swap(arr, i, idx)
 			idx++
 		}
 	}
+	swap(arr, idx-1, start)
 	return idx - 1
+}
+func swap(arr []int, i, j int) {
+	temp := arr[i]
+	arr[i] = arr[j]
+	arr[j] = temp
+}
+
+// 快速排序2 用到了分治和递归
+func QuickSort2(arr []int, start, end int) {
+	if end <= start {
+		return
+	}
+	cur := partition2(arr, start, end)
+	QuickSort2(arr, start, cur-1)
+	QuickSort2(arr, cur+1, end)
+
+}
+func partition2(arr []int, start, end int) int {
+	cur := start
+	for i := start; i < end; i++ {
+		if arr[i] < arr[end] {
+			temp := arr[cur]
+			arr[cur] = arr[i]
+			arr[i] = temp
+			cur++
+		}
+	}
+	temp := arr[cur]
+	arr[cur] = arr[end]
+	arr[end] = temp
+	return cur
 }
