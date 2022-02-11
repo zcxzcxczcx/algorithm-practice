@@ -5,14 +5,14 @@ import (
 )
 
 func main() {
-	arr := []int{0, 1, 0, 7, 4, 3, 2, 34, 399, 1}
+	arr := []int{0, 9, 0, 20, 4, 3, 2, 34, 399, 1, 4, 0, 8, 2, 1}
 	// for i := 0; i < 10; i++ {
 	// 	if i >= 0 {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	upAdjust(arr)
-	fmt.Printf("www=%v\n", arr)
+	// countSorting(arr)
+	fmt.Printf("www=%v\n", bucketSort(arr, 4))
 }
 
 // 选择排序
@@ -111,60 +111,6 @@ func upAdjust(arr []int) {
 	arr[childIndex] = temp
 }
 
-// 计数排序
-func countSorting(arr []int, maxValue int) []int {
-	arrSort := []int{}
-	for i := 0; i < maxValue; i++ {
-		arrSort = append(arrSort, 0)
-	}
-	for i := 0; i < len(arr); i++ {
-		arrSort[arr[i]-1]++
-	}
-	arrSortReturn := []int{}
-	for i := 0; i < len(arrSort); i++ {
-		if arrSort[i] > 0 {
-			for j := 0; j < arrSort[i]; j++ {
-				arrSortReturn = append(arrSortReturn, i+1)
-			}
-		}
-	}
-	return arrSortReturn
-}
-
-// 桶排序
-func bucketSort(arr []int, bucketSize int) []int {
-	if len(arr) == 0 {
-		return nil
-	}
-	min := arr[0]
-	max := arr[0]
-	for i := range arr {
-		if arr[i] < min {
-			min = arr[i]
-		}
-		if arr[i] > max {
-			max = arr[i]
-		}
-	}
-	bucketAccount := ((max - min) / bucketSize) + 1 // 桶的数量
-	bucket := [][]int{}
-	for i := 0; i < bucketAccount; i++ {
-		bucket = append(bucket, []int{})
-	}
-	for i := 0; i < len(arr); i++ {
-		bucketIdx := (arr[i] - min) / bucketSize
-		bucket[bucketIdx] = append(bucket[bucketIdx], arr[i])
-	}
-	arrSort := []int{}
-	for i := 0; i < bucketAccount; i++ {
-		ar := InsertSort(bucket[i]) // 对每个桶对元素进行排序
-		for j := 0; j < len(ar); j++ {
-			arrSort = append(arrSort, ar[j])
-		}
-	}
-	return arrSort
-}
-
 //基数排序
 func radixSort(arr []int, maxDigit int) {
 	if len(arr) <= 0 {
@@ -213,7 +159,6 @@ func ShellSort(arr []int) {
 
 // 归并排序
 func MergeSort(arr []int) []int {
-	fmt.Printf("arrarrarrarr=%v\n", arr)
 	arrL := len(arr)
 	if arrL < 2 {
 		return arr
@@ -221,14 +166,10 @@ func MergeSort(arr []int) []int {
 	mid := arrL / 2
 
 	leftArr := MergeSort(arr[:mid])
-	fmt.Printf("leftArrleftArrleftArr=%v\n", leftArr)
 	rightArr := MergeSort(arr[mid:])
-	fmt.Printf("rightArrrightArrrightArr=%v\n", rightArr)
 	return merge(leftArr, rightArr)
 }
 func merge(leftArr, rightArr []int) []int {
-	fmt.Printf("mergemergemergemergeleftArrleftArrleftArr=%v\n", leftArr)
-	fmt.Printf("mergemergemergemergerightArrrightArrrightArr=%v\n", rightArr)
 	leftL := len(leftArr)
 	rightL := len(rightArr)
 	tempArr := make([]int, 0)
@@ -305,4 +246,51 @@ func partition2(arr []int, start, end int) int {
 	arr[cur] = arr[end]
 	arr[end] = temp
 	return cur
+}
+
+// 计数排序
+func countSorting(arr []int, maxValue int) []int {
+	indexArr := make([]int, maxValue+1)
+	arrL := len(arr)
+	for i := 0; i < arrL; i++ {
+		indexArr[arr[i]]++
+	}
+	resultArr := []int{}
+	for k, v := range indexArr {
+		for i := 0; i < v; i++ {
+			resultArr = append(resultArr, k)
+		}
+	}
+	return resultArr
+}
+
+// 桶排序
+func bucketSort(arr []int, size int) []int {
+	arrL := len(arr)
+	if arrL == 0 {
+		return nil
+	}
+	min := arr[0]
+	max := arr[0]
+
+	for i := 0; i < len(arr); i++ {
+		if arr[i] < min {
+			min = arr[i]
+		}
+		if arr[i] > max {
+			max = arr[i]
+		}
+	}
+	count := (max-min)/size + 1
+	buket := make([][]int, count)
+
+	for i := 0; i < arrL; i++ {
+		buket[(arr[i]-min)/size] = append(buket[(arr[i]-min)/size], arr[i])
+	}
+	result := []int{}
+	for i := 0; i < count; i++ {
+		ar := MergeSort(buket[i])
+		result = append(result, ar...)
+	}
+	return result
 }
