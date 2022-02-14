@@ -11,8 +11,8 @@ func main() {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	// countSorting(arr)
-	fmt.Printf("www=%v\n", bucketSort(arr, 4))
+	radixSort(arr, 3)
+	fmt.Printf("www=%v\n", arr)
 }
 
 // 选择排序
@@ -109,33 +109,6 @@ func upAdjust(arr []int) {
 		parentIndex = (childIndex - 1) / 2
 	}
 	arr[childIndex] = temp
-}
-
-//基数排序
-func radixSort(arr []int, maxDigit int) {
-	if len(arr) <= 0 {
-		return
-	}
-	mod := 10
-	dev := 1
-
-	for i := 0; i < maxDigit; i++ {
-		buket := [10][]int{}
-		for j := 0; j < len(arr); j++ {
-			buketIndex := (arr[j] % mod) / dev
-			buket[buketIndex] = append(buket[buketIndex], arr[j])
-		}
-		pos := 0
-		for j := 0; j < 10; j++ {
-			for z := 0; z < len(buket[j]); z++ {
-				arr[pos] = buket[j][z]
-				pos++
-			}
-		}
-		dev = 10 * dev
-		mod = 10 * mod
-	}
-
 }
 
 // 希尔排序
@@ -293,4 +266,25 @@ func bucketSort(arr []int, size int) []int {
 		result = append(result, ar...)
 	}
 	return result
+}
+
+// 基数排序
+func radixSort(arr []int, maxDigit int) {
+	mod := 10
+	dev := 1
+	for i := 0; i < maxDigit; i++ {
+		bucket := make([][]int, 10)
+		for j := 0; j < len(arr); j++ {
+			bucket[(arr[j]%mod)/dev] = append(bucket[(arr[j]%mod)/dev], arr[j])
+		}
+		pos := 0
+		for j := 0; j < 10; j++ {
+			for z := 0; z < len(bucket[j]); z++ {
+				arr[pos] = bucket[j][z]
+				pos++
+			}
+		}
+		mod = mod * 10
+		dev = dev * 10
+	}
 }
