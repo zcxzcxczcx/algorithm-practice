@@ -11,8 +11,8 @@ func main() {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	radixSort(arr, 3)
-	fmt.Printf("www=%v\n", arr)
+	a := buketSort(arr, 100)
+	fmt.Printf("www=%v\n", a)
 }
 
 // 选择排序
@@ -24,11 +24,9 @@ func SelectSort(arr []int) {
 				minIdx = j
 			}
 		}
-
 		temp := arr[i]
 		arr[i] = arr[minIdx]
 		arr[minIdx] = temp
-
 	}
 }
 
@@ -112,6 +110,8 @@ func upAdjust(arr []int) {
 }
 
 // 希尔排序
+// 希尔排序又叫缩小增量排序
+// 简单插入排序的改进版
 func ShellSort(arr []int) {
 	arrL := len(arr)
 	for gap := arrL / 2; gap >= 1; gap = gap / 2 {
