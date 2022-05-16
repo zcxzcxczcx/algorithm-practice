@@ -11,8 +11,8 @@ func main() {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	a := buketSort(arr, 100)
-	fmt.Printf("www=%v\n", a)
+	InsertSort(arr)
+	fmt.Printf("www=%v\n", arr)
 }
 
 // 选择排序
@@ -46,6 +46,22 @@ func InsertSort(arr []int) []int {
 		arr[idx] = v
 	}
 	return arr
+}
+
+func InsertSort2(arr []int) {
+	for i := 0; i < len(arr); i++ {
+		temp := arr[i]
+		idx := i
+		for j := i - 1; j >= 0; j-- {
+			if temp >= arr[j] {
+				idx = j + 1
+				break
+			}
+			arr[j+1] = arr[j]
+		}
+
+		arr[idx] = temp
+	}
 }
 
 // 冒泡排序
