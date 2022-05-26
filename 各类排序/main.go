@@ -11,7 +11,7 @@ func main() {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	InsertSort(arr)
+	quickSort3(arr, 0, 14)
 	fmt.Printf("www=%v\n", arr)
 }
 
@@ -219,7 +219,6 @@ func QuickSort2(arr []int, start, end int) {
 	cur := partition2(arr, start, end)
 	QuickSort2(arr, start, cur-1)
 	QuickSort2(arr, cur+1, end)
-
 }
 func partition2(arr []int, start, end int) int {
 	cur := start
