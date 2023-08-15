@@ -5,13 +5,14 @@ import (
 )
 
 func main() {
+	fmt.Printf("www=%v\n", 1)
 	arr := []int{0, 9, 0, 20, 4, 3, 2, 34, 399, 1, 4, 0, 8, 2, 1}
 	// for i := 0; i < 10; i++ {
 	// 	if i >= 0 {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	quickSort3(arr, 0, 14)
+	SelectSort1(arr)
 	fmt.Printf("www=%v\n", arr)
 }
 
@@ -19,7 +20,7 @@ func main() {
 func SelectSort(arr []int) {
 	for i := 0; i < len(arr); i++ {
 		minIdx := i
-		for j := i + 1; j < len(arr); j++ {
+		for j := i; j < len(arr); j++ {
 			if arr[j] < arr[minIdx] {
 				minIdx = j
 			}
@@ -30,7 +31,7 @@ func SelectSort(arr []int) {
 	}
 }
 
-//插入排序
+// 插入排序
 func InsertSort(arr []int) []int {
 	arrL := len(arr)
 	for i := 0; i < arrL; i++ {
@@ -88,7 +89,7 @@ func buildBinaryTree(binaryTree []int) {
 	}
 }
 
-//堆排序
+// 堆排序
 // 下沉节点:删除的时候下沉
 func downAdjust(binaryTreeArr []int, parentIndex int) {
 	temp := binaryTreeArr[parentIndex]
