@@ -12,7 +12,7 @@ func main() {
 	// 		fmt.Printf("iiiiiiiiiii=%v\n", i)
 	// 	}
 	// }
-	SelectSort1(arr)
+	SelectSort(arr)
 	fmt.Printf("www=%v\n", arr)
 }
 
