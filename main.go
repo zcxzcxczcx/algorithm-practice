@@ -1,19 +1,21 @@
 package main
 
 import (
+	"algorithm-exercise/redisstore"
 	"fmt"
 	"math"
 	"sort"
-	"time"
 )
 
 func main() {
-	format := "20060102"
-	// 忽略时分秒
-	tStr := time.Now().Format(format)
-	fmt.Printf("ffffffffffffffffff=%v\n", tStr)
-	tDate, _ := time.Parse(format, tStr)
-	fmt.Printf("3333333333333=%v\n", tDate)
+
+	fmt.Printf("ffffffffffffffffff=%v\n", redisstore.D())
+	// format := "20060102"
+	// // 忽略时分秒
+	// tStr := time.Now().Format(format)
+	// fmt.Printf("ffffffffffffffffff=%v\n", tStr)
+	// tDate, _ := time.Parse(format, tStr)
+	// fmt.Printf("3333333333333=%v\n", tDate)
 
 }
 
